@@ -18,7 +18,7 @@ from urllib import robotparser
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import requests
-from selectolax.parser import HTMLParser
+from selectolax.lexbor import LexborHTMLParser as HTMLParser
 
 UA = "Mozilla/5.0 (compatible; internal-link-audit/1.0; +seo-tools)"
 ASSET_RE = re.compile(r"\.(jpg|jpeg|png|gif|svg|webp|ico|css|js|pdf|docx?|xlsx?|zip|rar|mp4|webm|woff2?|ttf|eot)(\?|$)", re.I)

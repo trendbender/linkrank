@@ -6,5 +6,5 @@ detects keyword cannibalization — no paid APIs required.
 """
 from .core import main
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __all__ = ["main", "__version__"]

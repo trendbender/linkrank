@@ -21,6 +21,7 @@ import requests
 from selectolax.lexbor import LexborHTMLParser as HTMLParser
 
 UA = "Mozilla/5.0 (compatible; internal-link-audit/1.0; +seo-tools)"
+META_CHARSET_RE = re.compile(rb"""<meta[^>]+charset\s*=\s*["']?\s*([\w.:-]+)""", re.I)
 ASSET_RE = re.compile(r"\.(jpg|jpeg|png|gif|svg|webp|ico|css|js|pdf|docx?|xlsx?|zip|rar|mp4|webm|woff2?|ttf|eot)(\?|$)", re.I)
 STOP = set("и в во не что он на я с со как а то все она так его но да ты к у же вы за бы по только ее мне было вот от меня еще нет о из ему теперь когда даже ну вдруг ли если уже или ни быть был него до вас нибудь опять уж вам ведь там потом себя ничего ей может они тут где есть надо ней для мы тебя их чем была сам чтоб без будто чего раз тоже себе под будет ж кто этот того потому этого какой совсем ним здесь этом один почти мой тем чтобы нее сейчас были куда зачем всех никогда можно при наконец два об другой хоть после над больше тот через эти нас про всего них какая много разве три эту моя впрочем хорошо свою этой перед иногда лучше чуть том нельзя такой им более всегда конечно всю между на по за от до из с у в о к".split())
 
@@ -47,6 +48,20 @@ def same_site(url, root_host, include_sub=False):
         base = root_host.split(":")[0]
         return h == root_host or h.endswith("." + base)
     return h == root_host
+
+
+def html_text(r):
+    """Decode an HTML response. Without a charset in Content-Type, requests falls back to
+    ISO-8859-1 (RFC 2616) and Cyrillic turns into mojibake, so use <meta charset> instead,
+    then charset detection."""
+    if "charset" in r.headers.get("Content-Type", "").lower():
+        return r.text
+    m = META_CHARSET_RE.search(r.content[:4096])
+    enc = m.group(1).decode("ascii") if m else (r.apparent_encoding or "utf-8")
+    try:
+        return r.content.decode(enc, errors="replace")
+    except LookupError:
+        return r.content.decode("utf-8", errors="replace")
 
 
 def clean_text(s):
@@ -80,7 +95,7 @@ def fetch(url, timeout):
         p.is_html = "text/html" in ct.lower()
         if not p.is_html or r.status_code != 200:
             return p
-        tree = HTMLParser(r.text)
+        tree = HTMLParser(html_text(r))
         t = tree.css_first("title")
         p.title = clean_text(t.text()) if t else ""
         h = tree.css_first("h1")

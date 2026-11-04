@@ -12,7 +12,7 @@ It answers questions that usually require paid tools:
 - Which pages are **orphans** (zero internal inlinks) or buried too deep?
 - Where is my site **cannibalizing itself** (one anchor → many targets, duplicate titles, near-duplicate content)?
 
-> Made by [KlientLab](https://klientlab.ru/tools/). MIT licensed.
+> Made by [4Queries](https://4queries.com/tools/). MIT licensed.
 
 ## Install
 
@@ -98,4 +98,4 @@ interactive graph export.
 
 ## License
 
-MIT © 2026 [KlientLab](https://klientlab.ru/tools/).
+MIT © 2026 [4Queries](https://4queries.com/tools/).

@@ -9,7 +9,7 @@ description = "Internal PageRank (Link Score) & keyword-cannibalization auditor 
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
-authors = [{ name = "KlientLab", email = "dmitrievdm@gmail.com" }]
+authors = [{ name = "4Queries", email = "dmitrievdm@gmail.com" }]
 keywords = ["seo", "internal-links", "pagerank", "link-score", "cannibalization", "crawler", "site-audit", "orphan-pages"]
 classifiers = [
   "Development Status :: 4 - Beta",
@@ -32,7 +32,7 @@ dependencies = [
 Homepage = "https://github.com/trendbender/linkrank"
 Repository = "https://github.com/trendbender/linkrank"
 "Bug Tracker" = "https://github.com/trendbender/linkrank/issues"
-"Made by" = "https://klientlab.ru/tools/"
+"Made by" = "https://4queries.com/tools/"
 
 [project.scripts]
 linkrank = "linkrank.core:main"
